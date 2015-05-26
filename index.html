@@ -1,0 +1,138 @@
+<!Doctype html>
+<html>
+<head>
+  <title>More or less</title>
+  <meta name='viewport' content="width=device-width, initial-scale=1.0">
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      width: 100%;
+      height: inherit;
+      font-size: 22px;
+      font-family: helvetica, sans-serif;
+      margin: 0;
+    }
+    a {
+      display: block;
+      float: left;
+      padding: 1em;
+      color: black;
+      text-decoration: none;
+      background: #999;
+      box-shadow:inset 0px 0px 2px 1px #888;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      background: #333;
+      color: #faf9fa;
+      box-shadow:inset 0px 0px 2px 1px #555;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+    }
+
+    #wrap {
+      width: 25%;
+      margin: 1em auto 0;
+      background: #FCF9FC;
+      border: 1px solid #C4C0BA;
+      box-shadow:inset 1px 1px 6px 1px #D4DBE5;
+    }
+    p#counter {
+      font-size: 2.5em;
+      text-align: center;
+      padding: 1em;
+      margin: 0;
+    }
+    #btns {
+      width: 100%;
+      height: 100px;
+    }
+
+    a#less,
+    a#more {
+      border: 1px solid #777;
+      border-radius: 1px;
+      margin: .5em;
+      box-sizing: border-box;
+    }
+    a#more {
+      float: right;
+    }
+    .positive {
+      color: green;
+    }
+    .negative {
+      color: red;
+    }
+    @media only screen and (max-width: 1024px) {
+      #wrap {
+        width: 60%;
+      }
+    }
+    @media only screen and (max-width: 787px) {
+      #wrap {
+        width: 95%;
+      }
+      p#counter {
+        font-size: 1.3em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>counter</h1>
+  <div id='wrap'>
+    <p id='counter' class='positive'></p>
+    <div id='btns'>
+      <a href='#' id='less'>Less</a>
+      <a href='#' id='more'>More</a>
+    </div>
+  </div>
+  <script>
+  (function() { // self invoked function protects variables from global scope
+  // when not in dev!
+    var countertag = document.getElementById("counter");
+    var more = document.getElementById('more');
+    var less = document.getElementById('less');
+
+    // set page index at start
+    window.onload = function() {
+      return countertag.innerHTML = 1;
+    }
+    // object gets current value of innerHTML for countertag
+    var countIndex = {
+      current: function() {
+        return parseInt(countertag.innerHTML);
+      },
+      status: function() {
+        if (countIndex.current() > 0) {
+          countertag.setAttribute("class", "positive");
+        } else if (countIndex.current() < 0) {
+          countertag.setAttribute("class", "negative");
+        }
+      }
+    }
+
+    // event handler increases index by one with each click
+    more.addEventListener("click", function(e) {
+      countertag.innerHTML = countIndex.current() + 1;
+      countIndex.status();
+    },false);
+
+    // event handler decrements index by one with each click;
+    less.addEventListener("click", function(e) {
+      countertag.innerHTML = countIndex.current() - 1;
+      countIndex.status();
+    },false);
+  })();
+
+  </script>
+</body>
+</html>
